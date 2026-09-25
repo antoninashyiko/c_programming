@@ -2,9 +2,9 @@
 #include <stdio.h>
 
 void solve_quadratic(double a, double b, double c) {
-    if (a==0) {
-        if (b==0) {
-            if (c==0) {
+    if (fabs(a) < 1e-9) {
+        if (fabs(b) < 1e-9) {
+            if (fabs(c) < 1e-9) {
                 printf("infinite solutions\n");
             }
             else {
@@ -18,7 +18,7 @@ void solve_quadratic(double a, double b, double c) {
         return;
     }
     double D=b*b-4*a*c;
-    if (D==0) {
+    if (fabs(D) < 1e-9) {
         printf("one solutions x=%lf\n", -b/(2*a));
     }
     else if (D<0) {
@@ -33,9 +33,9 @@ void solve_quadratic(double a, double b, double c) {
 }
 void solve_biquadratic(double a, double b, double c) {
     int ans_count=0;
-    if (a==0) {
-        if (b==0) {
-            if (c==0) {
+    if (fabs(a) < 1e-9) {
+        if (fabs(b) < 1e-9) {
+            if (fabs(c) < 1e-9) {
                 printf("infinite solutions\n");
             }
             else {
@@ -56,7 +56,7 @@ void solve_biquadratic(double a, double b, double c) {
         return;
     }
     double D=b*b-4*a*c;
-    if (D==0) {
+    if (fabs(D) < 1e-9) {
         double x=-b/(2*a);
         if (x>0) {
             printf("x1=%lf\n", sqrt(x));
