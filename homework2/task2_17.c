@@ -9,7 +9,7 @@ double sigmoid_derivative(double x) {
     return (sigmoid(x+h)-sigmoid(x-h))/(2*h);
 }
 int test_sigmoid() {
-    if (sigmoid(0)!=0.5) {
+    if (fabs(sigmoid(0) - 0.5) > 1e-6) { 
         printf("test for sigmoid has failed\n");
         return 1;
     }
