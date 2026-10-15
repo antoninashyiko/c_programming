@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <math.h>
 void input_matrix(int n, double matrix[n][n]) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -16,14 +15,31 @@ void print_matrix(int n, double matrix[n][n]) {
     }
 }
 double determinant(int n, double matrix[n][n]) {
-    double det=1;
-    double det2=matrix[0][0]*matrix[1][1]-matrix[1][0]*matrix[0][1];
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            det*=matrix[i][i]*pow(-1, i+j)*det2;
-        }
+    if (n==1) {
+        return matrix[0][0];
     }
-    return det;
+    if (n==2) {
+        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+    }
+    double sum = 0;
+    for (int j = 0; j < n; j++) { // формування мінорів
+        double al_major[n - 1][n - 1];
+        int major_i = 0;
+        for (int k = 1; k < n; k++) {
+            int major_j = 0;
+            for (int f = 0; f < n; f++) {
+                if (f == j) {
+                    continue;
+                }
+                al_major[major_i][major_j] = matrix[k][f];
+                major_j++;
+            }
+            major_i++;
+        }
+        double sign=(j % 2 == 0) ? 1.0 : -1.0; // if j%2==0, sign=1, else sign=-1
+        sum+=sign*matrix[0][j]*determinant(n - 1, al_major);
+    }
+    return sum;
 }
 int main() {
     int n;
