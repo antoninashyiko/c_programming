@@ -49,7 +49,7 @@ MATRIX multiply_matrix(const MATRIX mat1, MATRIX mat2, int n1, int n2) {
         return NULL;
     }
     MATRIX result=(MATRIX)malloc(sizeof(result[0])*n1);
-    if (result == NULL) { // <-- THIS CHECK IS MISSING
+    if (result == NULL) {
         return NULL;
     }
     for (int i=0; i<n1; i++) {
