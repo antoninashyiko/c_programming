@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
 typedef struct Toy {
     char name[50];
@@ -62,7 +63,7 @@ bool write_toy_file( const char* filename ) {
     return true;
 }
 
-bool max_price (  const char* filename, const char* outfilename, Toy* max_price_toy ) {
+bool max_price (  const char* filename, const char* outfilename, Toy* max_price_toy, char name[50] ) {
     FILE* file = fopen( filename, "rb" );
     if ( file == NULL ) {
         return false;
@@ -70,22 +71,27 @@ bool max_price (  const char* filename, const char* outfilename, Toy* max_price_
     FILE *outfile = fopen( outfilename, "wb" );
     if ( outfile == NULL ) {
         fclose( file );
+        return false;
     }
 
     Toy toy;
     double max_price = -1.0;
+    bool flag = false;
     while ( fread(&toy, sizeof(toy), 1, file ) == 1 ) {
-        if ( toy.price > max_price ) {
+        if ( toy.price > max_price && strcmp( toy.name, name ) == 0 ) {
             max_price = toy.price;
             *max_price_toy = toy;
+            flag = true;
         }
     }
-    fwrite( max_price_toy, sizeof(Toy), 1, outfile );
-    print_toy(max_price_toy);
+    if ( flag ) {
+        fwrite( max_price_toy, sizeof(Toy), 1, outfile );
+        print_toy(max_price_toy);
+    }
 
     fclose( outfile );
     fclose( file );
-    return true;
+    return flag;
 }
 void print_toy_file(const char* filename) {
     FILE* file = fopen(filename, "rb");
@@ -109,8 +115,11 @@ int main () {
     printf( "\n");
 
     Toy max_price_toy;
-    printf( "toy with max price is: \n");
-    if (!max_price( "toys.bin", "output_toy.bin", &max_price_toy )) {
+    char name[50];
+    printf( "enter name of the toy to see the most expensive model: ");
+    scanf( "%s", name );
+    printf( "toy with max price with this name is: \n");
+    if (!max_price( "toys.bin", "output_toy.bin", &max_price_toy, name )) {
         printf("Could not find any toys or open the file.\n");
     }
 
