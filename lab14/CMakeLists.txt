@@ -1,0 +1,5 @@
+add_executable(lab14_task1 task1.cpp)
+add_executable(lab14_task2 task2.cpp)
+add_executable(lab14_task3 task3.cpp)
+add_executable(lab14_task4 task4.cpp)
+add_executable(lab14_task5 task5.cpp)
