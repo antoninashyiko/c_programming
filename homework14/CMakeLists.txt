@@ -1,0 +1,1 @@
+add_executable(homework14_task17 task17.cpp)
